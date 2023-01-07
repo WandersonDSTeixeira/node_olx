@@ -1,35 +1,44 @@
-import { Schema, connection, model } from "mongoose";
+import { Schema, connection, model, Model, ObjectId } from "mongoose";
 
-type Ad = {
+export type AdType = {
+    _id: ObjectId;
     idUser: string;
     state: string;
     category: string;
-    images: [object];
+    images: [{
+        url: string;
+        default: boolean;
+    }];
     dateCreated: Date;
     title: string;
     price: number;
     priceNegotiable: boolean;
     description: string;
     views: number;
-    status: string;
+    status: boolean;
+    default: boolean;
 }
 
-const schema = new Schema<Ad>({
+const schema = new Schema<AdType>({
     idUser: String,
     state: String,
     category: String,
-    images: [Object],
+    images: [{
+        url: { type: String },
+        default: { type: Boolean }
+    }],
     dateCreated: Date,
     title: String,
     price: Number,
     priceNegotiable: Boolean,
     description: String,
     views: Number,
-    status: String
+    status: String,
+    default: Boolean
 })
 
 const modelName = 'Ad';
 
 export default (connection && connection.models[modelName]) ?
-    connection.models[modelName] :
-    model<Ad>(modelName, schema);
+    connection.models[modelName] as Model<AdType> :
+    model<AdType>(modelName, schema);

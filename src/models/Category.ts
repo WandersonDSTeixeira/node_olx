@@ -1,11 +1,13 @@
-import { Schema, connection, model } from "mongoose";
+import { Schema, connection, model, Model, ObjectId } from "mongoose";
 
-type Category = {
+export type CategoryType = {
+    _id: ObjectId;
     name: string;
     slug: string;
+    img: string;
 }
 
-const schema = new Schema<Category>({
+const schema = new Schema<CategoryType>({
     name: String,
     slug: String
 })
@@ -13,5 +15,5 @@ const schema = new Schema<Category>({
 const modelName = 'Category';
 
 export default (connection && connection.models[modelName]) ?
-    connection.models[modelName] :
-    model<Category>(modelName, schema);
+    connection.models[modelName] as Model<CategoryType> :
+    model<CategoryType>(modelName, schema);
