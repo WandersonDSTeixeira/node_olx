@@ -1,11 +1,18 @@
 import sharp from "sharp";
 import { Request, Response } from "express";
-import Ad, { AdType } from "../models/Ad";
-import Category, { CategoryType } from "../models/Category";
-import User, { UserType } from "../models/User";
+import Ad from "../models/Ad";
+import Category from "../models/Category";
+import User from "../models/User";
 import { unlink } from "fs/promises";
-import State, { StateType } from "../models/State";
-import mongoose, { ObjectId } from "mongoose";
+import State from "../models/State";
+import mongoose from "mongoose";
+import { FilterType } from "../types/FilterType";
+import { AdsType } from "../types/AdsType";
+import { AdUpdateType } from "../types/AdUpdateType";
+import { UserType } from "../types/UserType";
+import { CategoryType } from "../types/CategoryType";
+import { AdType } from "../types/AdType";
+import { StateType } from "../types/StateType";
 
 export const adsController = {
     addAd: async (req: Request, res: Response) => {
@@ -79,13 +86,6 @@ export const adsController = {
             state,
         } = req.query;
 
-        type FilterType = {
-            status: boolean;
-            title: Object;
-            category: string;
-            state: string;
-        };
-
         const filters = { status: true } as FilterType;
 
         if (q) filters.title = { '$regex': q, '$options': "i" };
@@ -109,16 +109,6 @@ export const adsController = {
             .skip(parseInt(offset as string))
             .limit(parseInt(limit as string))
             .exec();
-        
-        type AdsType = {
-            _id: ObjectId;
-            title: string;
-            price: number;
-            priceNegotiable: boolean;
-            image: {
-                url: string;
-            };
-        }
 
         let ads: AdsType[] = [];
         
@@ -221,22 +211,7 @@ export const adsController = {
             });
         }
 
-        type UpdatesType = {
-            title?: string;
-            price?: number;
-            priceNegotiable?: boolean;
-            status?: boolean;
-            description?: string;
-            category?: string;
-            images?: [
-                {
-                    url: string;
-                    default: boolean;
-                }
-            ];
-        };
-
-        let updates: UpdatesType = {};
+        let updates: AdUpdateType = {};
 
         if (title) updates.title = title;
         if (price) {

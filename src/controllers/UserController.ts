@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
-import State, { StateType } from "../models/State";
-import User, { UserType } from "../models/User";
-import Category, { CategoryType } from "../models/Category";
+import State from "../models/State";
+import User from "../models/User";
+import Category from "../models/Category";
 import Ad from "../models/Ad";
 import { validationResult } from "express-validator/src/validation-result";
 import { matchedData } from "express-validator/src/matched-data";
 import bcrypt from "bcrypt";
+import { UserUpdateType } from "../types/UserUpdateType";
+import { UserType } from "../types/UserType";
+import { StateType } from "../types/StateType";
+import { CategoryType } from "../types/CategoryType";
 
 export const userController = {
     getStates: async (req: Request, res: Response) => {
@@ -39,14 +43,7 @@ export const userController = {
 
         const user = req.user as UserType;
 
-        type Updates = {
-            name?: string;
-            email?: string;
-            state?: string;
-            password?: string;
-        };
-
-        let updates: Updates = {};
+        let updates: UserUpdateType = {};
 
         if (data.name) updates.name = data.name;
         if (data.email) {

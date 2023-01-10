@@ -1,11 +1,5 @@
 import { Schema, connection, model, Model, ObjectId } from "mongoose";
-
-export type CategoryType = {
-    _id: ObjectId;
-    name: string;
-    slug: string;
-    img: string;
-}
+import { CategoryType } from "../types/CategoryType";
 
 const schema = new Schema<CategoryType>({
     name: String,

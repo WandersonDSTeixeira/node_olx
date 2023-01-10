@@ -1,12 +1,5 @@
 import { Schema, connection, model, Model, ObjectId } from "mongoose";
-
-export type UserType = {
-    _id: ObjectId;
-    name: string;
-    email: string;
-    state: string;
-    password: string;
-};
+import { UserType } from "../types/UserType";
 
 const schema = new Schema<UserType>({
     name: String,
