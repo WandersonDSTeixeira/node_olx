@@ -1,6 +1,6 @@
-import { ObjectId } from "mongoose";
+import { ObjectId } from 'mongoose';
 
-export type AdsType = {
+export type GetAdsType = {
     _id: ObjectId;
     title: string;
     price: number;

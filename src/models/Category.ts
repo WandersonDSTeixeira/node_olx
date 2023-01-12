@@ -1,5 +1,5 @@
-import { Schema, connection, model, Model, ObjectId } from "mongoose";
-import { CategoryType } from "../types/CategoryType";
+import { Schema, connection, model, Model, ObjectId } from 'mongoose';
+import { CategoryType } from '../types/CategoryType';
 
 const schema = new Schema<CategoryType>({
     name: String,

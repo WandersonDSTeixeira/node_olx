@@ -1,9 +1,9 @@
-import passport from "passport";
+import passport from 'passport';
 import dotenv from 'dotenv';
-import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
-import User from "../models/User";
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
+import User from '../models/User';
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 

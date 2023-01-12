@@ -1,10 +1,10 @@
-import { Router, Request, Response } from "express";
-import { userController } from "../controllers/userController";
-import { authController } from "../controllers/authController";
-import { adsController } from "../controllers/adsController";
-import { validator } from "../validators/validator";
-import { privateRoute } from "../middlewares/passport";
-import { upload } from "../middlewares/uploadFiles";
+import { Router, Request, Response } from 'express';
+import { userController } from '../controllers/userController';
+import { authController } from '../controllers/authController';
+import { adsController } from '../controllers/adsController';
+import { validator } from '../validators/validator';
+import { privateRoute } from '../middlewares/passport';
+import { upload } from '../middlewares/uploadFiles';
 
 const router = Router();
 

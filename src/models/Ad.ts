@@ -1,5 +1,5 @@
-import { Schema, connection, model, Model, ObjectId } from "mongoose";
-import { AdType } from "../types/AdType";
+import { Schema, connection, model, Model } from 'mongoose';
+import { AdType } from '../types/AdType';
 
 const schema = new Schema<AdType>({
     idUser: String,

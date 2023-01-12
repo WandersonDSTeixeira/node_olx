@@ -1,5 +1,5 @@
-import { Schema, connection, model, Model, ObjectId } from "mongoose";
-import { StateType } from "../types/StateType";
+import { Schema, connection, model, Model, ObjectId } from 'mongoose';
+import { StateType } from '../types/StateType';
 
 const schema = new Schema<StateType>({
     name: String

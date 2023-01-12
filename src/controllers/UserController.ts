@@ -1,30 +1,29 @@
-import mongoose from "mongoose";
-import { Request, Response } from "express";
-import State from "../models/State";
-import User from "../models/User";
-import Category from "../models/Category";
-import Ad from "../models/Ad";
-import { validationResult } from "express-validator/src/validation-result";
-import { matchedData } from "express-validator/src/matched-data";
-import bcrypt from "bcrypt";
-import { UserUpdateType } from "../types/UserUpdateType";
-import { UserType } from "../types/UserType";
-import { StateType } from "../types/StateType";
-import { CategoryType } from "../types/CategoryType";
+import mongoose, { ObjectId } from 'mongoose';
+import { Request, Response } from 'express';
+import { validationResult } from 'express-validator/src/validation-result';
+import { matchedData } from 'express-validator/src/matched-data';
+import bcrypt from 'bcrypt';
+import { UserUpdateType } from '../types/UserUpdateType';
+import { UserType } from '../types/UserType';
+import { StateType } from '../types/StateType';
+import { CategoryType } from '../types/CategoryType';
+import * as UserService from '../services/UserService';
+import { AdType } from '../types/AdType';
 
 export const userController = {
     getStates: async (req: Request, res: Response) => {
-        let states = await State.find({});
+        const states = await UserService.findStates();
         res.json({ states });
     },
     infoUser: async (req: Request, res: Response) => {
         const user = req.user as UserType;
-        const state = await State.findById(user.state) as StateType;
-        const ads = await Ad.find({ idUser: user._id.toString() });
+        const state = await UserService.findUserState(user.state) as StateType;
+        const userId = user._id as ObjectId;
+        const ads = await UserService.findAds(userId.toString()) as AdType[];
 
         let adList = [];
         for (let i in ads) {
-            const catName = await Category.findById(ads[i].category) as CategoryType;
+            const catName = await UserService.findCategory(ads[i].category) as CategoryType;
             adList.push({ ...ads[i], category: catName.slug });
         }
 
@@ -47,21 +46,22 @@ export const userController = {
 
         if (data.name) updates.name = data.name;
         if (data.email) {
-            const emailCheck = await User.findOne({ email: data.email });
-            if (emailCheck) return res.status(400).json({ error: "Esse email já existe!" });
+            const emailCheck = await UserService.findUser(data.email);
+            if (emailCheck) return res.status(400).json({ error: 'Esse email já existe!' });
             updates.email = data.email;
         }
         if (data.state) {
-            if (!mongoose.Types.ObjectId.isValid(data.state)) return res.status(400).json({ error: "Código de estado inválido!" });
+            if (!mongoose.Types.ObjectId.isValid(data.state)) return res.status(400).json({ error: 'Código de estado inválido!' });
             
-            const stateCheck = State.findById(data.state);
-            if (!stateCheck) return res.status(400).json({ error: "Esse estado não existe!" });
+            const stateCheck = await UserService.findUserState(data.state);
+            if (!stateCheck) return res.status(400).json({ error: 'Esse estado não existe!' });
             updates.state = data.state;
         }
         if (data.password) updates.password = await bcrypt.hash(data.password, 10);
 
-        await User.findOneAndUpdate({ _id: user._id }, { $set: updates });
+        const userId = user._id as ObjectId;
+        await UserService.updateUser( userId.toString(), updates );
 
-        res.json({ msg: "Atualizado com sucesso!" });
+        res.json({ msg: 'Atualizado com sucesso!' });
     }
 };
