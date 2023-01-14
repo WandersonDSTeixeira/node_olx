@@ -41,8 +41,19 @@ export const adsController = {
             price = 0;
         }
 
-        const userId = user._id as ObjectId;
-        const newAd: AdType = await AdsService.createAdInstance(userId.toString(), user.state, title, cat, price, priceneg, desc);
+        const newAd: AdType = {
+            status: true,
+            idUser: user._id.toString(),
+            state: user.state,
+            dateCreated: new Date(),
+            title,
+            category: cat,
+            price,
+            priceNegotiable: priceneg == 'true' ? true : false,
+            description: desc,
+            views: 0,
+            images: [{ url: '', default: true }]
+        };
 
         const files = req.files as Express.Multer.File[];
 
@@ -61,6 +72,7 @@ export const adsController = {
 
                 await unlink(files[i].path);
             }
+            newAd.images.shift();
         } else {
             return res
                 .status(400)
@@ -74,7 +86,7 @@ export const adsController = {
         }
 
         await AdsService.createAd(newAd);
-        res.status(201).json({ id: newAd._id });
+        res.status(201).json({ msg: 'Anúncio criado com sucesso!'});
     },
     getAds: async (req: Request, res: Response) => {
         const {

@@ -15,8 +15,7 @@ const schema = new Schema<AdType>({
     priceNegotiable: Boolean,
     description: String,
     views: Number,
-    status: String,
-    default: Boolean
+    status: String
 })
 
 const modelName = 'Ad';

@@ -6,24 +6,8 @@ import { FilterType } from '../types/FilterType';
 import { AdUpdateType } from '../types/AdUpdateType';
 import User from '../models/User';
 
-export const createAdInstance = async (userId: string, state: string, title: string, cat: string, price: number, priceneg: string, desc: string) => {
-    const newAd = await Ad.create({
-        status: true,
-        idUser: userId,
-        state,
-        dateCreated: new Date(),
-        title,
-        category: cat,
-        price,
-        priceNegotiable: priceneg == 'true' ? true : false,
-        description: desc,
-        views: 0,
-    });
-    return newAd;
-}
-
 export const createAd = async (newAd: AdType) => {
-    return await Ad.create({ newAd });
+    return await Ad.create(newAd);
 }
 
 export const findAdsTotal = async (filters: FilterType) => {

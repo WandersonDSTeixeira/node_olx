@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose';
 
 export type AdType = {
-    _id: ObjectId;
+    _id?: ObjectId;
     idUser: string;
     state: string;
     category: string;
@@ -16,5 +16,4 @@ export type AdType = {
     description: string;
     views: number;
     status: boolean;
-    default: boolean;
 }
