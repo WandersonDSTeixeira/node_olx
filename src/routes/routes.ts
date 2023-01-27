@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
-import { userController } from '../controllers/userController';
-import { authController } from '../controllers/authController';
-import { adsController } from '../controllers/adsController';
+import { userController } from '../controllers/UserController';
+import { authController } from '../controllers/AuthController';
+import { adsController } from '../controllers/AdsController';
 import { validator } from '../validators/validator';
 import { privateRoute } from '../middlewares/passport';
 import { upload } from '../middlewares/uploadFiles';

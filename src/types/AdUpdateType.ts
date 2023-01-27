@@ -5,6 +5,7 @@ export type AdUpdateType = {
     status?: boolean;
     description?: string;
     category?: string;
+    categoryName?: string;
     images?: [
         {
             url: string;

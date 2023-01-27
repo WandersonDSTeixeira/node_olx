@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator/src/validation-result';
 import { matchedData } from 'express-validator/src/matched-data';
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../middlewares/passport';
 import * as UserService from '../services/UserService';
@@ -16,8 +15,6 @@ export const authController =  {
         
         const user = await UserService.findUser(data.email);
         if (user) return res.status(400).json({ error: 'Esse email já existe!' });
-        
-        if (!mongoose.Types.ObjectId.isValid(data.state)) return res.status(400).json({ error: 'Código de estado inválido!' });
         
         const stateItem = await AdsService.findState(data.state);
         if (!stateItem) return res.status(400).json({ error: 'Esse estado não existe!' });

@@ -9,6 +9,7 @@ import { UserType } from '../types/UserType';
 import { CategoryType } from '../types/CategoryType';
 import { AdType } from '../types/AdType';
 import * as AdsService from '../services/AdsService';
+import { SingleImageType } from '../types/SingleImageType';
 
 export const adsController = {
     addAd: async (req: Request, res: Response) => {
@@ -16,23 +17,11 @@ export const adsController = {
         let { title, price, priceneg, desc, cat } = req.body;
 
         if (!title || !cat)
-            return res
-                .status(400)
-                .json({
-                    error: 'Título e/ou categoria não foram preenchidos!',
-                });
+            return res.status(400).json({ error: 'Título e/ou categoria não foram preenchidos!' });
 
-        if (mongoose.Types.ObjectId.isValid(cat)) {
-            const catItem = await AdsService.findCategory(cat as string);
-            if (!catItem)
-                return res
-                    .status(400)
-                    .json({ error: 'Categoria inexistente!' });
-        } else {
-            return res
-                .status(400)
-                .json({ error: 'Código de categoria inválido!' });
-        }
+        const catItem = await AdsService.findCategory(cat as string);
+        if (!catItem)
+            return res.status(400).json({ error: 'Essa categoria não existe!' });
 
         if (price) {
             price = price.replace('.', '').replace(',', '.').replace('R$', '');
@@ -48,6 +37,7 @@ export const adsController = {
             dateCreated: new Date(),
             title,
             category: cat,
+            categoryName: catItem.name,
             price,
             priceNegotiable: priceneg == 'true' ? true : false,
             description: desc,
@@ -65,28 +55,21 @@ export const adsController = {
                     .toFormat('jpeg')
                     .toFile(`./public/media/${files[i].filename}.jpg`);
 
-                newAd.images.push({
-                    url,
-                    default: false,
-                });
+                newAd.images.push({ url, default: false });
 
                 await unlink(files[i].path);
             }
             newAd.images.shift();
         } else {
-            return res
-                .status(400)
-                .json({
-                    error: 'Você precisa enviar ao menos uma imagem do seu produto!',
-                });
+            return res.status(400).json({ error: 'Você precisa enviar ao menos uma imagem do seu produto!' });
         }
 
         if (newAd.images.length > 0) {
             newAd.images[0].default = true;
         }
 
-        await AdsService.createAd(newAd);
-        res.status(201).json({ msg: 'Anúncio criado com sucesso!'});
+        const newAdAdded = await AdsService.createAd(newAd);
+        res.status(201).json(newAdAdded);
     },
     getAds: async (req: Request, res: Response) => {
         const {
@@ -104,34 +87,38 @@ export const adsController = {
 
         if (cat) {
             const c = await AdsService.findCategory(cat as string);
-            if (c) filters.category = c._id.toString();
+            if (c) filters.category = c.slug.toString();
         }
 
         if (state) {
             const s = await AdsService.findState(state as string);
-            if (s) filters.state = s._id.toString();
+            if (s) filters.state = s.name.toString();
         }
 
         let total = 0;
         const adsTotal = await AdsService.findAdsTotal(filters);
         total = adsTotal.length;
 
-        const AdsData = await AdsService.findFilteredAd(filters, sort as string, offset as string, limit as string);
+        const adsData = await AdsService.findFilteredAd(filters, sort as string, offset as string, limit as string);
         let ads: GetAdsType[] = [];
 
-        for (let i in AdsData) {
-            let image = { url: `${process.env.BASE}/media/default.jgp` };
-            let defaultImg = AdsData[i].images.find((e) => e.default);
+        for (let i in adsData) {
+            let image = { url: `${process.env.BASE}/media/default.png` };
+            type AdImage = {
+                url: string;
+                default: boolean;
+            }
+            let defaultImg = adsData[i].images.find((e: AdImage) => e.default);
 
             if (defaultImg)
                 image = { url: `${process.env.BASE}/media/${defaultImg.url}` };
 
             ads.push({
-                _id: AdsData[i]._id,
-                title: AdsData[i].title,
-                price: AdsData[i].price,
-                priceNegotiable: AdsData[i].priceNegotiable,
-                image,
+                _id: adsData[i]._id,
+                title: adsData[i].title,
+                price: adsData[i].price,
+                priceNegotiable: adsData[i].priceNegotiable,
+                image
             });
         }
 
@@ -141,8 +128,6 @@ export const adsController = {
         const { id } = req.params;
         const { other = null } = req.query;
 
-        if (!id)
-            return res.status(400).json({ error: 'Esse produto não existe!' });
         if (!mongoose.Types.ObjectId.isValid(id as string)) {
             return res.status(400).json({ error: 'ID inválido!' });
         }
@@ -168,7 +153,7 @@ export const adsController = {
 
             for (let i in otherData) {
                 if (otherData[i]._id.toString() !== ad._id.toString()) {
-                    let image = `${process.env.BASE}/media/default.jpg`;
+                    let image = `${process.env.BASE}/media/default.png`;
                     let defaultImg = otherData[i].images.find((e) => e.default);
 
                     if (defaultImg)
@@ -206,7 +191,7 @@ export const adsController = {
     editAd: async (req: Request, res: Response) => {
         const user = req.user as UserType;
         const { id } = req.params;
-        let { title, status, price, priceneg, desc, cat } = req.body;
+        let { title, status, price, priceneg, desc, cat, images } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id))
             return res.status(400).json({ error: 'ID inválido!' });
@@ -216,9 +201,7 @@ export const adsController = {
 
         const userId = user._id as ObjectId;
         if (userId.toString() !== ad.idUser.toString()) {
-            return res.status(403).json({
-                error: 'Somente o proprietário desse anúncio pode fazer edições!',
-            });
+            return res.status(403).json({ error: 'Somente o proprietário desse anúncio pode fazer edições!' });
         }
 
         let updates: AdUpdateType = {};
@@ -234,15 +217,67 @@ export const adsController = {
         if (desc) updates.description = desc;
         if (cat) {
             const category = await AdsService.findCategory(cat);
-            if (!category)
-                return res.status(400).json({ error: 'Categoria inexistente' });
-            updates.category = category._id.toString() as string;
+            if (!category) return res.status(400).json({ error: 'Categoria inexistente' });
+            updates.category = category.slug.toString() as string;
+            updates.categoryName = category.name;
         }
-
         await AdsService.updateAd(id, updates);
 
-        const files = req.files as Express.Multer.File[];
+        const updatedImages: SingleImageType[] = [];
+        const imagesToDelete = [...ad.images];
+        if (images) {
+            if (Array.isArray(images)) {
+                const imageIndexes = [];
 
+                for (let a in images) {
+                    for (let i = 0; i < ad.images.length; i++) {
+                        if (ad.images[i].url.includes(images[a])) {
+                            updatedImages.push(ad.images[i]);
+                        }
+                    }
+                }
+                for (let a in images) {
+                    for (let i = 0; i < ad.images.length; i++) {
+                        if (ad.images[i].url.includes(images[a])) {
+                            imageIndexes.push(i)
+                        }
+                    }
+                }
+                imageIndexes.sort((a, b) => b - a);
+                for (let i of imageIndexes) {
+                    imagesToDelete.splice(i, 1);
+                }
+                for (let i in imagesToDelete) {
+                    await unlink(`\public/media/${imagesToDelete[i].url}`);
+                }
+            }
+            if (!Array.isArray(images)) {
+
+                for (let i = 0; i < ad.images.length; i++) {
+                    if (ad.images[i].url.includes(images)) {
+                        updatedImages.push(ad.images[i]);
+                    }
+                }
+
+                let index = 0;
+
+                for (let i = 0; i < ad.images.length; i++) {
+                    if (ad.images[i].url.includes(images)) {
+                        index = i;
+                    }
+                }
+                imagesToDelete.splice(index, 1);
+                for (let i in imagesToDelete) {
+                    await unlink(`\public/media/${imagesToDelete[i].url}`);
+                }
+            }
+        } else {
+            for (let i in imagesToDelete) {
+                await unlink(`\public/media/${imagesToDelete[i].url}`);
+            }
+        }
+        
+        const files = req.files as Express.Multer.File[];
         if (files) {
             for (let i = 0; i < files.length; i++) {
                 const url = `${files[i].filename}.jpg`;
@@ -250,17 +285,19 @@ export const adsController = {
                     .resize(500, 500)
                     .toFormat('jpeg')
                     .toFile(`./public/media/${files[i].filename}.jpg`);
-                ad.images.push({
+                updatedImages.push({
                     url,
                     default: false,
                 });
-
                 await unlink(files[i].path);
             }
         }
+        
+        updatedImages[0].default = true;
 
         const adId = ad._id as ObjectId;
-        await AdsService.updateAdImages(adId.toString(), ad.images);
+        await AdsService.deleteAdImages(adId.toString());
+        await AdsService.updateAdImages(adId.toString(), updatedImages);
 
         res.json({ msg: 'Atualizado com sucesso!' });
     },
@@ -279,9 +316,7 @@ export const adsController = {
 
         const userId = user._id as ObjectId;
         if (ad.idUser.toString() !== userId.toString())
-            return res.status(403).json({
-                error: 'Somente o proprietário pode remover este anúncio!',
-            });
+            return res.status(403).json({ error: 'Somente o proprietário pode remover este anúncio!' });
 
         await AdsService.deleteAd(id);
 

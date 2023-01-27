@@ -5,6 +5,7 @@ const schema = new Schema<AdType>({
     idUser: String,
     state: String,
     category: String,
+    categoryName: String,
     images: [{
         url: { type: String },
         default: { type: Boolean }

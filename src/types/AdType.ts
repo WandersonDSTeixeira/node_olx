@@ -5,10 +5,12 @@ export type AdType = {
     idUser: string;
     state: string;
     category: string;
+    categoryName: string;
     images: [{
         url: string;
         default: boolean;
     }];
+    image?: { url: string };
     dateCreated: Date;
     title: string;
     price: number;

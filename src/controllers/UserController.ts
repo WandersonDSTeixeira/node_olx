@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from 'mongoose';
+import { ObjectId } from 'mongoose';
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator/src/validation-result';
 import { matchedData } from 'express-validator/src/matched-data';
@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt';
 import { UserUpdateType } from '../types/UserUpdateType';
 import { UserType } from '../types/UserType';
 import { StateType } from '../types/StateType';
-import { CategoryType } from '../types/CategoryType';
 import * as UserService from '../services/UserService';
 import { AdType } from '../types/AdType';
 
@@ -20,18 +19,26 @@ export const userController = {
         const state = await UserService.findUserState(user.state) as StateType;
         const userId = user._id as ObjectId;
         const ads = await UserService.findAds(userId.toString()) as AdType[];
-
         let adList = [];
-        for (let i in ads) {
-            const catName = await UserService.findCategory(ads[i].category) as CategoryType;
-            adList.push({ ...ads[i], category: catName.slug });
-        }
 
+        for (let i in ads) {
+            let image = { url: `${process.env.BASE}/media/default.png` };
+            type AdImage = {
+                url: string;
+                default: boolean;
+            }
+            let defaultImg = ads[i].images.find((e: AdImage) => e.default);
+
+            if (defaultImg)
+                image = { url: `${process.env.BASE}/media/${defaultImg.url}` };
+                adList.push({ ...ads[i], image });
+        }
+        
         res.json({
             name: user.name,
             email: user.email,
             state: state.name,
-            ads: adList,
+            ads: adList
         });
     },
     editUser: async (req: Request, res: Response) => {
@@ -51,8 +58,6 @@ export const userController = {
             updates.email = data.email;
         }
         if (data.state) {
-            if (!mongoose.Types.ObjectId.isValid(data.state)) return res.status(400).json({ error: 'Código de estado inválido!' });
-            
             const stateCheck = await UserService.findUserState(data.state);
             if (!stateCheck) return res.status(400).json({ error: 'Esse estado não existe!' });
             updates.state = data.state;

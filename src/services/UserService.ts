@@ -1,8 +1,6 @@
 import Ad from '../models/Ad';
-import Category from '../models/Category';
 import User from '../models/User';
 import State from '../models/State';
-import { AdType } from '../types/AdType';
 import { UserUpdateType } from '../types/UserUpdateType';
 
 export const findStates = async () => {
@@ -10,15 +8,11 @@ export const findStates = async () => {
 }
 
 export const findUserState = async (state: string) => {
-    return await State.findById( state ).exec();
+    return await State.findOne({name: state}).exec();
 }
 
 export const findAds = async (userId: string) => {
-    return await Ad.findOne<AdType[]>({ idUser: userId }).exec();
-}
-
-export const findCategory = async (category: string) => {
-    return await Category.findById( category );
+    return await Ad.find({ idUser: userId }).exec();
 }
 
 export const findUser = async (email: string) => {
@@ -26,7 +20,7 @@ export const findUser = async (email: string) => {
 }
 
 export const updateUser = async (userId: string, updates: UserUpdateType) => {
-    return await User.findByIdAndUpdate({ _id: userId, $set: updates });
+    return await User.findByIdAndUpdate( userId, updates );
 }
 
 export const createUser = async (name: string, email: string, passwordHash: string, state: string) => {
