@@ -15,8 +15,11 @@ npm run dev
 —> Configuração do arquivo .env (exemplo):
 
 PORT=3001
+
 BASE=http://localhost:3001
+
 DATABASE=mongodb://localhost:27017/olx
+
 SECRET_KEY=87654321
 
 —> Dados para preencher seu banco de dados MongoDB:
@@ -26,4 +29,5 @@ Após criar a database olx no MongoDB, criar as collections (ads, categories, st
 —> Para ter acesso aos dados e anúncios do meu usuário, fazer login:
 
 email: teste@teste.com
+
 senha: teste
