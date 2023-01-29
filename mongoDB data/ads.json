@@ -1,0 +1,160 @@
+[{
+  "_id": {
+    "$oid": "63c08de458fd9850a61a39c5"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "MG",
+  "category": "clothes",
+  "images": [
+    {
+      "url": "21f2bb12e93cf95504115602d87cf6e2.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63c08de458fd9850a61a39c6"
+      }
+    },
+    {
+      "url": "5d7468fc780e7ec2c690d0cb4fda61c0.jpg",
+      "default": false,
+      "_id": {
+        "$oid": "63c08de458fd9850a61a39c7"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1673563620551"
+    }
+  },
+  "title": "Jaqueta de Couro",
+  "price": 270,
+  "priceNegotiable": false,
+  "description": "Jaqueta de couro de grife em perfeito estado.",
+  "views": 24,
+  "status": "true",
+  "__v": 0,
+  "categoryName": "Roupas"
+},{
+  "_id": {
+    "$oid": "63c08e2758fd9850a61a39cb"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "MG",
+  "category": "cars",
+  "images": [
+    {
+      "url": "f07aed97dab97e191c74048bad43162e.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63c08e2758fd9850a61a39cc"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1673563686974"
+    }
+  },
+  "title": "Carro Toyota 2004",
+  "price": 0,
+  "priceNegotiable": true,
+  "description": "Carro Toyota 2004 em ótimas condições. Quilometragem baixa. Preço negociável.",
+  "views": 22,
+  "status": "true",
+  "__v": 0,
+  "categoryName": "Carros"
+},{
+  "_id": {
+    "$oid": "63c08e8258fd9850a61a39d0"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "MG",
+  "category": "electronics",
+  "images": [
+    {
+      "url": "40375a7d4b7526380d56193d1c95cd08.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63c08e8258fd9850a61a39d1"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1673563778807"
+    }
+  },
+  "title": "Notebook Acer",
+  "price": 1250,
+  "priceNegotiable": false,
+  "description": "Notebook Acer usado em ótimas condições",
+  "views": 6,
+  "status": "true",
+  "__v": 0,
+  "categoryName": "Eletrônicos"
+},{
+  "_id": {
+    "$oid": "63c08ed258fd9850a61a39d5"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "MG",
+  "category": "sports",
+  "images": [
+    {
+      "url": "573d11bfa913cfa4e7ffb2a2640d67bf.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63c08ed258fd9850a61a39d6"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1673563858884"
+    }
+  },
+  "title": "Bola de basquete",
+  "price": 30.5,
+  "priceNegotiable": false,
+  "description": "Bola de basquete seminova",
+  "views": 129,
+  "status": "true",
+  "__v": 0,
+  "categoryName": "Esportes"
+},{
+  "_id": {
+    "$oid": "63cd9271e926867e1c76db42"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "AL",
+  "category": "baby",
+  "categoryName": "Bebê",
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1674416753558"
+    }
+  },
+  "title": "Berço de madeira",
+  "price": 630,
+  "priceNegotiable": false,
+  "description": "Berço de madeira em ótimas condições. Apenas um ano de uso.",
+  "views": 11,
+  "status": "true",
+  "__v": 0,
+  "images": [
+    {
+      "url": "b3f85ce77fc1d3bec2c6ec495f4f064f.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63cd9271e926867e1c76db43"
+      }
+    },
+    {
+      "url": "6d0b6093fbf675ceec614493c2edd427.jpg",
+      "default": false,
+      "_id": {
+        "$oid": "63cd9271e926867e1c76db44"
+      }
+    }
+  ]
+}]
