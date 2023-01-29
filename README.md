@@ -1,4 +1,4 @@
-Backend do site clone da OLX feito com Node, Typescript e MongoDB como banco de dados. Funciona em conjunto com o projeto react_olx, onde é possível acessar o site e testar todas as funcionalidades direto do navegador: https://react-fdvhm0nnw-wandersondsteixeira.vercel.app/
+Backend do site clone da OLX feito com Node, Typescript e MongoDB como banco de dados. Funciona em conjunto com o projeto [react_olx](https://github.com/WandersonDSTeixeira/react_olx), onde é possível acessar o site e testar todas as funcionalidades direto do navegador: https://react-fdvhm0nnw-wandersondsteixeira.vercel.app/
 
 —> Pré-requisitos globais:
 
