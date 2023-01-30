@@ -26,11 +26,11 @@
       "$numberLong": "1673563620551"
     }
   },
-  "title": "Jaqueta de Couro",
+  "title": "Jaqueta de Couro 1",
   "price": 270,
   "priceNegotiable": false,
   "description": "Jaqueta de couro de grife em perfeito estado.",
-  "views": 24,
+  "views": 25,
   "status": "true",
   "__v": 0,
   "categoryName": "Roupas"
@@ -55,11 +55,11 @@
       "$numberLong": "1673563686974"
     }
   },
-  "title": "Carro Toyota 2004",
+  "title": "Carro Toyota 2004 1",
   "price": 0,
   "priceNegotiable": true,
   "description": "Carro Toyota 2004 em ótimas condições. Quilometragem baixa. Preço negociável.",
-  "views": 22,
+  "views": 23,
   "status": "true",
   "__v": 0,
   "categoryName": "Carros"
@@ -84,7 +84,7 @@
       "$numberLong": "1673563778807"
     }
   },
-  "title": "Notebook Acer",
+  "title": "Notebook Acer 1",
   "price": 1250,
   "priceNegotiable": false,
   "description": "Notebook Acer usado em ótimas condições",
@@ -113,7 +113,7 @@
       "$numberLong": "1673563858884"
     }
   },
-  "title": "Bola de basquete",
+  "title": "Bola de basquete 1",
   "price": 30.5,
   "priceNegotiable": false,
   "description": "Bola de basquete seminova",
@@ -134,11 +134,11 @@
       "$numberLong": "1674416753558"
     }
   },
-  "title": "Berço de madeira",
+  "title": "Berço de madeira 1",
   "price": 630,
   "priceNegotiable": false,
   "description": "Berço de madeira em ótimas condições. Apenas um ano de uso.",
-  "views": 11,
+  "views": 12,
   "status": "true",
   "__v": 0,
   "images": [
@@ -157,4 +157,156 @@
       }
     }
   ]
+},{
+  "_id": {
+    "$oid": "63d7da5421a8a39f937f39a2"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "SP",
+  "category": "baby",
+  "categoryName": "Bebê",
+  "images": [
+    {
+      "url": "d6d869dd89a4f0a55cd553fcca101245.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63d7da5421a8a39f937f39a3"
+      }
+    },
+    {
+      "url": "0e5f98ad2d928e7b02aa3c10116f6002.jpg",
+      "default": false,
+      "_id": {
+        "$oid": "63d7da5421a8a39f937f39a4"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1675090514933"
+    }
+  },
+  "title": "Banheira de bebê dobrável",
+  "price": 90,
+  "priceNegotiable": false,
+  "description": "Banheira de bebê dobrável em perfeito estado.",
+  "views": 1,
+  "status": "true",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63d7db7b21a8a39f937f39c0"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "SP",
+  "category": "sports",
+  "categoryName": "Esportes",
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1675090811298"
+    }
+  },
+  "title": "Bola voleibol Mikasa",
+  "price": 70,
+  "priceNegotiable": false,
+  "description": "Bola voleibol Mikasa 2020 em ótimas condições.",
+  "views": 3,
+  "status": "true",
+  "__v": 0,
+  "images": [
+    {
+      "url": "d06ef3dd7e6f3d585e661cbaaafd4af8.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63d7dbba21a8a39f937f39e2"
+      }
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "63d7ddc221a8a39f937f3a23"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "SP",
+  "category": "cars",
+  "categoryName": "Carros",
+  "images": [
+    {
+      "url": "8fc62bbe8cb986bf195ceb5d3d8c7d0b.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63d7ddc221a8a39f937f3a24"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1675091394437"
+    }
+  },
+  "title": "Chevrolet celta 2020",
+  "price": 0,
+  "priceNegotiable": true,
+  "description": "Chevrolet Celta 2020 de quilometragem baixa.",
+  "views": 2,
+  "status": "true",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63d7de9d21a8a39f937f3aa0"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "SP",
+  "category": "electronics",
+  "categoryName": "Eletrônicos",
+  "images": [
+    {
+      "url": "83b8ccc7c01af06d15174bb7dca3eb1f.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63d7de9d21a8a39f937f3aa1"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1675091613161"
+    }
+  },
+  "title": "Teclado Positivo",
+  "price": 50,
+  "priceNegotiable": false,
+  "description": "Teclado Positivo de 2 anos de uso em boas condiçoes.",
+  "views": 1,
+  "status": "true",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63d7df6f21a8a39f937f3abe"
+  },
+  "idUser": "63c06aeda9059c8d7d7b9da0",
+  "state": "SP",
+  "category": "clothes",
+  "categoryName": "Roupas",
+  "images": [
+    {
+      "url": "79808a107bea6ae218b09044c69634ee.jpg",
+      "default": true,
+      "_id": {
+        "$oid": "63d7df6f21a8a39f937f3abf"
+      }
+    }
+  ],
+  "dateCreated": {
+    "$date": {
+      "$numberLong": "1675091823002"
+    }
+  },
+  "title": "Bermudas Masculinas",
+  "price": 30,
+  "priceNegotiable": false,
+  "description": "Bermudas Masculinas seminovas em ótimas condições.",
+  "views": 2,
+  "status": "true",
+  "__v": 0
 }]
