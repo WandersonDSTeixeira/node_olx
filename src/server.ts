@@ -33,6 +33,6 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
 server.use(errorHandler);
 
-server.listen(process.env.PORT, () => {
-    console.log(`Rodando em ${process.env.BASE}`);
+server.listen(process.env.PORT || 3001, () => {
+    console.log('Backend is on!');
 });
