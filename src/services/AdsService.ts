@@ -148,5 +148,5 @@ export const findState = async (state: string) => {
 }
 
 export const findAdUser = async (idUser: string) => {
-    return await User.findOne({ idUser }).exec();
+    return await User.findById( idUser ).exec();
 }
